@@ -4,14 +4,18 @@ public class Adress {
 	private String city;
 	private String district;
 	private String neighborhood;
-	private String streetNo;
+	private String street;
+	private String apartment;
+	private String No;
 	
-	public Adress(String city,String district,String neighborhood,String streetNo)
+	public Adress(String city,String district,String neighborhood,String street,String apertment,String No)
 	{
 		this.city=city;
 		this.district=district;
 		this.neighborhood=neighborhood;
-		this.streetNo=streetNo;
+		this.street=street;
+		this.apartment=apertment;
+		this.No=No;
 	}
 
 	public String getCity() {
@@ -38,12 +42,31 @@ public class Adress {
 		this.neighborhood = neighborhood;
 	}
 
-	public String getStreetNo() {
-		return streetNo;
+	public String getStreet() {
+		return street;
 	}
 
-	public void setStreetNo(String streetNo) {
-		this.streetNo = streetNo;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	
+
+	public String getApartment() {
+		return apartment;
+	}
+
+	public void setApartment(String apartment) {
+		this.apartment = apartment;
+	}
+
+	public String getNo() {
+		return No;
+	}
+
+	public void setNo(String no) {
+		No = no;
+	}
+	public String allAdress() 
+	{
+		return city+" "+district+" "+neighborhood+" "+street+" "+apartment+" "+No;
+	}
 }

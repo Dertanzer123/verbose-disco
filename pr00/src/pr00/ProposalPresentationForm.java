@@ -8,15 +8,14 @@ import pr00.Machine;
 public class ProposalPresentationForm {
 	private Corp      formercorp;
 	private Corp      sellercorp;
-	private List<Machine> machines;
+	private Machine[] machines;
 	public ProposalPresentationForm(Corp formercorp , Corp sellercorp,Machine[] machines) {
 		
 		this.formercorp=formercorp;
 		this.sellercorp=sellercorp;
-		for(int i=0;i<machines.length;i++)
-		{
-			this.machines.add(machines[i]);	
-		}
+		
+			this.machines=machines;	
+		
 		
 		
 	}
@@ -32,10 +31,11 @@ public class ProposalPresentationForm {
 	public void setSellercorp(Corp sellercorp) {
 		this.sellercorp = sellercorp;
 	}
-	public List<Machine> getMachines() {
+	public Machine[] getMachines() {
 		return machines;
 	}
-	public void setMachines(List<Machine> machines) {
+	public void setMachines(Machine[] machines) {
 		this.machines = machines;
 	}
+	
 }
