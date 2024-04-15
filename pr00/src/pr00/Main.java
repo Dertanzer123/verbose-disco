@@ -166,16 +166,7 @@ public class Main {
 			XWPFParagraph paragraphsb1 = document1.createParagraph();
 			XWPFRun runsb1 = paragraphsb1.createRun();
 			runsb1.addBreak(BreakType.PAGE);
-		//////////
-			CTSectPr section2 = body.getSectPr();
-            CTPageSz ps2 = section2.addNewPgSz();
-            if (ps2 == null) {
-            	ps2 = section2.addNewPgSz();
-            }
-            ps2.setOrient(STPageOrientation.LANDSCAPE);
-            ps2.setW(BigInteger.valueOf(15840));
-            ps2.setH(BigInteger.valueOf(12240));
-       //////////
+	
 			
 		//
 			XWPFTable Table1 = document1.createTable(form1.getMachines().length + 1, 9);
@@ -246,7 +237,7 @@ public class Main {
 	            
 		        XWPFParagraph paragraphsb2 = document1.createParagraph();
 				XWPFRun runsb2 = paragraphsb2.createRun();
-				runsb1.addBreak(BreakType.PAGE);
+				runsb2.addBreak(BreakType.PAGE);
 	           
 
 	            // Set the orientation to landscape
