@@ -4,9 +4,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 
+import org.apache.poi.hwpf.usermodel.Paragraph;
 import org.apache.poi.hwpf.usermodel.Table;
 import org.apache.poi.wp.usermodel.HeaderFooterType;
+import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.TableRowAlign;
+import org.apache.poi.xwpf.usermodel.TableWidthType;
 import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFHeader;
@@ -14,9 +18,14 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTBody;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDecimalNumber;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDocument1;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageSz;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STPageOrientation;
 
 public class Main {
 
@@ -35,9 +44,23 @@ public class Main {
 		
 		ProposalPresentationForm form1 = new ProposalPresentationForm(former1, seller1, machines1);
 		try {
+			
+			/////
 			XWPFDocument document1 = new XWPFDocument();
 			
-			XWPFParagraph paragraph1 = document1.createParagraph();
+			CTDocument1 ctDocument = document1.getDocument();
+	            CTBody body = ctDocument.getBody();
+	            CTSectPr section1 = body.addNewSectPr();
+			
+	            CTPageSz ps1 = section1.getPgSz();
+	            if (ps1 == null) {
+	            	ps1 = section1.addNewPgSz();
+	            }
+	            ps1.setOrient(STPageOrientation.PORTRAIT);
+	            ps1.setW(BigInteger.valueOf(12240));
+	            ps1.setH(BigInteger.valueOf(15840));
+	        
+	        XWPFParagraph paragraph1 = document1.createParagraph();
 			XWPFParagraph paragraph2 = document1.createParagraph();
 			XWPFParagraph paragraph3 = document1.createParagraph();
 			XWPFParagraph paragraph4 = document1.createParagraph();
@@ -45,9 +68,10 @@ public class Main {
 			XWPFParagraph paragraph6 = document1.createParagraph();
 			XWPFParagraph paragraph7 = document1.createParagraph();
 			
+			
 			XWPFRun run1 = paragraph1.createRun();
 			run1.setText(form1.getFormercorp().getCorpName());	
-			run1.addBreak();
+			
 			
 			XWPFRun run2 = paragraph2.createRun();
 			run2.setBold(true);			
@@ -65,7 +89,7 @@ public class Main {
 			run5.setFontSize(14);
 			
 			XWPFRun run6 = paragraph6.createRun();
-			run6.setText("KIRSALA YATIRIMLA ÜRETİME DESTEK PROJESİ yatırımı kapsamında 4 Ocak 2022 tarihli teklif davet mektubunuz ile istemiş olduğunuz Makine-ekipman alımına ilişkin fiyet teklifimiz.");
+			run6.setText("KIRSALA YATIRIMLA ÜRETİME DESTEK PROJESİ yatırımı kapsamında 4 Ocak 2022 tarihli teklif davet mektubunuz ile istemiş olduğunuz Makine-ekipman alımına ilişkin fiyat teklifimiz.");
 			
 			XWPFRun run7a = paragraph7.createRun();
 			
@@ -115,71 +139,125 @@ public class Main {
 			run7b6a.setText("6.");
 			run7b6b.setText("Faaliyet belgesi");
 			
+			//
+			run5.addBreak();
+			run5.addBreak();
+			run5.addBreak();
+			run6.addBreak();
+			run6.addBreak();
+			run6.addBreak();
+			run6.addBreak();
+			run6.addBreak();
+			run6.addBreak();
+			run6.addBreak();
+			
+			
+			
+			
+			
+			
+			//
+			
 			
 			paragraph1.setAlignment(ParagraphAlignment.CENTER);
-       
-		//	printcorp(document1, form1.getSellercorp(), 0);
-		//	printcorp(document1, form1.getFormercorp(), 0);
-        //
-		//	XWPFTable Table1 = document1.createTable(form1.getMachines().length + 1, 9);
-		//	XWPFTableRow[] tableRows = new XWPFTableRow[form1.getMachines().length + 1];
-		//	tableRows[0] = Table1.getRow(0);
-		//	tableRows[0].getCell(0).setText("NO");
-		//	tableRows[0].getCell(1).setText("MAKİNE-EKİPMAN ADI");
-		//	tableRows[0].getCell(2).setText("TEKNİK ÖZELLİKLER");
-		//	tableRows[0].getCell(3).setText("MARKA MODEL");
-		//	tableRows[0].getCell(4).setText("MENŞEİ");
-		//	tableRows[0].getCell(5).setText("BİRİM");
-		//	tableRows[0].getCell(6).setText("MİKTAR");
-		//	tableRows[0].getCell(7).setText("BİRİM FİYARI");
-		//	tableRows[0].getCell(8).setText("TOPLAM FİYATI");
-		//	for (int i = 0; i < tableRows.length - 1; i++) {
-		//		tableRows[i + 1] = Table1.getRow(i+1);
-		//		tableRows[i + 1].getCell(0).setText("" + (i + 1));
-		//		tableRows[i + 1].getCell(1).setText(form1.getMachines()[i].getName());
-		//		tableRows[i + 1].getCell(2).setText(form1.getMachines()[i].getAttributes().getCapacity());// Add an method in atribute class to take string																													
-		//		tableRows[i + 1].getCell(3).setText(form1.getMachines()[i].getModel());
-		//		tableRows[i + 1].getCell(4).setText(form1.getMachines()[i].getOrigin());
-		//		tableRows[i + 1].getCell(5).setText(form1.getMachines()[i].getUnit());
-		//		tableRows[i + 1].getCell(6).setText(form1.getMachines()[i].getQuantity());
-		//		tableRows[i + 1].getCell(7).setText(form1.getMachines()[i].getUnitprice());
-		//		tableRows[i + 1].getCell(8).setText("" + (Integer.parseInt(form1.getMachines()[i].getUnitprice())* (Integer.parseInt(form1.getMachines()[i].getQuantity()))));
-		//	}
-		//		
-		//	XWPFTableRow lastRow = Table1.createRow();
-		//	
-		//	lastRow.removeCell(8);
-		//	lastRow.removeCell(7);
-		//	lastRow.removeCell(6);
-		//	lastRow.removeCell(5);
-		//	lastRow.removeCell(4);
-		//	lastRow.removeCell(3);
-		//	lastRow.removeCell(2);
-		//	
-		//	int sum=0;
-		//	
-		//	for(int i=0;i<tableRows.length - 1; i++) 
-		//	{
-		//		sum+=(Integer.parseInt(form1.getMachines()[i].getUnitprice())* (Integer.parseInt(form1.getMachines()[i].getQuantity())));
-		//	}
-        //
-		//        CTTc ctTc = lastRow.getCell(0).getCTTc();
-		//        CTTcPr ctTcPr = ctTc.addNewTcPr();
-		//        CTDecimalNumber ctDecimalNumber = ctTcPr.addNewGridSpan();
-		//        ctDecimalNumber.setVal(BigInteger.valueOf(7));
-		//        
-		//        CTTc ctTc1 = lastRow.getCell(1).getCTTc();
-		//        CTTcPr ctTcPr1 = ctTc1.addNewTcPr();
-		//        CTDecimalNumber ctDecimalNumber1 = ctTcPr1.addNewGridSpan();
-		//        ctDecimalNumber1.setVal(BigInteger.valueOf(2));
-        //
-		//        lastRow.getCell(0).setText("TOPLAM");
-		//        lastRow.getCell(1).setText(""+sum);
+			paragraph2.setAlignment(ParagraphAlignment.CENTER);
+			paragraph3.setAlignment(ParagraphAlignment.END);
+			
+			XWPFParagraph paragraphsb1 = document1.createParagraph();
+			XWPFRun runsb1 = paragraphsb1.createRun();
+			runsb1.addBreak(BreakType.PAGE);
+		//////////
+			CTSectPr section2 = body.getSectPr();
+            CTPageSz ps2 = section2.addNewPgSz();
+            if (ps2 == null) {
+            	ps2 = section2.addNewPgSz();
+            }
+            ps2.setOrient(STPageOrientation.LANDSCAPE);
+            ps2.setW(BigInteger.valueOf(15840));
+            ps2.setH(BigInteger.valueOf(12240));
+       //////////
+			
+		//
+			XWPFTable Table1 = document1.createTable(form1.getMachines().length + 1, 9);
+			XWPFTableRow[] tableRows = new XWPFTableRow[form1.getMachines().length + 1];
+			tableRows[0] = Table1.getRow(0);
+			tableRows[0].getCell(0).setText("NO");
+			tableRows[0].getCell(1).setText("MAKİNE-EKİPMAN ADI");
+			tableRows[0].getCell(2).setText("TEKNİK ÖZELLİKLER");
+			tableRows[0].getCell(3).setText("MARKA MODEL");
+			tableRows[0].getCell(4).setText("MENŞEİ");
+			tableRows[0].getCell(5).setText("BİRİM");
+			tableRows[0].getCell(6).setText("MİKTAR");
+			tableRows[0].getCell(7).setText("BİRİM FİYARI");
+			tableRows[0].getCell(8).setText("TOPLAM FİYATI");
+			for (int i = 0; i < tableRows.length - 1; i++) {
+				tableRows[i + 1] = Table1.getRow(i+1);
+				tableRows[i + 1].getCell(0).setText("" + (i + 1));
+				tableRows[i + 1].getCell(1).setText(form1.getMachines()[i].getName());
+				tableRows[i + 1].getCell(2).setText(form1.getMachines()[i].getAttributes().getCapacity());// Add an method in atribute class to take string																													
+				tableRows[i + 1].getCell(3).setText(form1.getMachines()[i].getModel());
+				tableRows[i + 1].getCell(4).setText(form1.getMachines()[i].getOrigin());
+				tableRows[i + 1].getCell(5).setText(form1.getMachines()[i].getUnit());
+				tableRows[i + 1].getCell(6).setText(form1.getMachines()[i].getQuantity());
+				tableRows[i + 1].getCell(7).setText(form1.getMachines()[i].getUnitprice());
+				tableRows[i + 1].getCell(8).setText("" + (Integer.parseInt(form1.getMachines()[i].getUnitprice())* (Integer.parseInt(form1.getMachines()[i].getQuantity()))));
+			}
+				
+			XWPFTableRow lastRow = Table1.createRow();
+			
+			lastRow.removeCell(8);
+			lastRow.removeCell(7);
+			lastRow.removeCell(6);
+			lastRow.removeCell(5);
+			lastRow.removeCell(4);
+			lastRow.removeCell(3);
+			lastRow.removeCell(2);
+			
+			int sum=0;
+			
+			for(int i=0;i<tableRows.length - 1; i++) 
+			{
+				sum+=(Integer.parseInt(form1.getMachines()[i].getUnitprice())* (Integer.parseInt(form1.getMachines()[i].getQuantity())));
+			}
+        
+		        CTTc ctTc = lastRow.getCell(0).getCTTc();
+		        CTTcPr ctTcPr = ctTc.addNewTcPr();
+		        CTDecimalNumber ctDecimalNumber = ctTcPr.addNewGridSpan();
+		        ctDecimalNumber.setVal(BigInteger.valueOf(7));
+		        
+		        CTTc ctTc1 = lastRow.getCell(1).getCTTc();
+		        CTTcPr ctTcPr1 = ctTc1.addNewTcPr();
+		        CTDecimalNumber ctDecimalNumber1 = ctTcPr1.addNewGridSpan();
+		        ctDecimalNumber1.setVal(BigInteger.valueOf(2));
+        
+		        
+		        lastRow.getCell(0).setText("TOPLAM");
+		        lastRow.getCell(1).setText(""+sum);
 		
 			
+		        ///
+		        Table1.setTableAlignment(TableRowAlign.CENTER);
+		        Table1.setWidthType(TableWidthType.AUTO);
+		       
+		        
+		        ///
+		        ////
+		       
+	            
+		        XWPFParagraph paragraphsb2 = document1.createParagraph();
+				XWPFRun runsb2 = paragraphsb2.createRun();
+				runsb1.addBreak(BreakType.PAGE);
+	           
+
+	            // Set the orientation to landscape
+	           
+	            
+	            
+	            
+		        ////
 		
 	        
-			FileOutputStream out ;;// dirpath change before use																													
+			FileOutputStream out ;// dirpath change before use																													
 			
 			for(int i=1;i<4;i++) 
 			{
@@ -244,7 +322,7 @@ public class Main {
 			if(input.getEmail()!=null) 
 			{
 			run1.addBreak();
-			run1.setText("E POSTA");
+			run1.setText("E POSTA-");
 			run1.setText(input.getEmail());
 			}
 			run1.setFontSize(15);
