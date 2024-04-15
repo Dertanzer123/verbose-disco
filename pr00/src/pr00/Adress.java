@@ -67,6 +67,32 @@ public class Adress {
 	}
 	public String allAdress() 
 	{
-		return city+" "+district+" "+neighborhood+" "+street+" "+apartment+" "+No;
+		String sum="";
+		
+		if(city!=null) 
+		{
+			sum=sum+city+" ";
+		}
+		if(district!=null) 
+		{
+			sum=sum+district+" ";
+		}
+		if(neighborhood!=null) 
+		{
+			sum=sum+neighborhood+" ";
+		}
+		if(street!=null) 
+		{
+			sum=sum+street+" ";
+		}
+		if(No!=null) 
+		{
+			sum=sum+No;
+		}
+		if(sum.equals(""))
+		{return null;}
+		else {
+		return sum;
+		}
 	}
 }
