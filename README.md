@@ -1,2 +1,4 @@
 # verbose-disco
-this repo has sourse code of some word doc automation project
+this repo has sourse code of some word doc automation project 
+
+project aborted.
